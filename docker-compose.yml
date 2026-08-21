@@ -1,0 +1,48 @@
+services:
+  # Web Server + PHP 8.3
+  app:
+    image: serversideup/php:8.3-fpm-nginx
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - nexus
+    depends_on:
+      - database
+
+  # MySQL Database
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: nexus_system
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: sail
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - nexus
+
+  # phpMyAdmin (Web GUI for DB)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    networks:
+      - nexus
+    depends_on:
+      - database
+
+networks:
+  nexus:
+    driver: bridge
+
+volumes:
+  db_data:
+
