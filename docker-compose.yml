@@ -1,11 +1,13 @@
 services:
   # Web Server + PHP 8.3
   app:
-    image: serversideup/php:8.3-fpm-nginx
-    volumes:
-      - .:/var/www/html
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "80:80"
+    volumes:
+      - .:/var/www/html
     networks:
       - nexus
     depends_on:
