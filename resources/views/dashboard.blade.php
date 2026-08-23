@@ -9,7 +9,15 @@
 </head>
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+       <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold text-gray-800">{{ $tenant->name }}</h1>
+            <form method="POST" action="/logout">
+                @csrf
+                <button type="submit" class="text-sm text-red-500 hover:underline">Logout</button>
+            </form>
+        </div>
+        <p class="text-sm text-gray-500 mb-4">{{ $tenant->industry_type }} | {{ $tenant->subscription_plan }} Plan</p>
         <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ $tenant->name }}</h1>
         <p class="text-sm text-gray-500 mb-4">{{ $tenant->industry_type }} | {{ $tenant->subscription_plan }} Plan</p>
 
