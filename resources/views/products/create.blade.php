@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product - DenPOS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen p-8">
-    <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">Add New Product</h1>
+@extends('layouts.app')
 
+@section('title', 'Add Product')
+@section('page-title', 'Add New Product')
+
+@section('content')
+    <div class="max-w-md bg-white p-6 rounded-lg shadow">
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">
                 {{ $errors->first() }}
@@ -41,5 +36,4 @@
             <button type="submit" class="w-full bg-blue-500 text-white font-bold py-2 rounded-lg hover:bg-blue-600">Save Product</button>
         </form>
     </div>
-</body>
-</html>
+@endsection

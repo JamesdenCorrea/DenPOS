@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'tenant_id',
+        'role',
     ];
     /**
      * Get the attributes that should be cast.
@@ -40,5 +41,24 @@ class User extends Authenticatable
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
+    }
+        /**
+     * Check if the user is an owner.
+     */
+    public function isOwner(): bool
+    {
+        return $this->role === 'owner';
+    }
+
+    /**
+     * Check if the user is a manager or owner.
+     */
+    public function isManager(): bool
+    {
+        return in_array($this->role, ['owner', 'manager']);
+    }
+        public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin';
     }
 }

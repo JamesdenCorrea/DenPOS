@@ -13,6 +13,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+
 });
 
 
@@ -27,10 +28,14 @@ Route::middleware('auth')->group(function () {
     Route::post('products', [ProductController::class, 'store'])->name('products.store');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}/', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::delete('/products/{product}/', [ProductController::class, 'destroy'])->name('products.destroy');    
+Route::get('/pos', function () {
+    $products = App\Models\Product::where('is_active', true)->get();
+    return view('pos.index', compact('products'));
+})->name('pos');
 });
 
 // Root URL - Redirect to login or Dashboard
 Route::get('/', function () {
-    return redirect('/dashboard');
+    return redirect('/pos');
 });

@@ -66,6 +66,7 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'tenant_id' => $tenant->id,
+            'role' => 'owner',
         ]);
 
         Auth::login($user);

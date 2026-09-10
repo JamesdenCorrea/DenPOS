@@ -28,4 +28,11 @@ class Tenant extends Model
     {
         return $this->hasMany(Modifier::class);
     }
+      /**
+     * A Tenant has many Users (Staff).
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }
