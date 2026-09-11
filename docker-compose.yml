@@ -4,8 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
+    ports:      
       - "80:80"
+      - "5173:5173"
     volumes:
       - .:/var/www/html
     networks:
@@ -36,6 +37,7 @@ services:
       PMA_PORT: 3306
     ports:
       - "8080:80"
+
     networks:
       - nexus
     depends_on:

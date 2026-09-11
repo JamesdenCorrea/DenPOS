@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use Inertia\Inertia;
 
 
 // Guest Routes (Only for users NOT logged in)
@@ -30,11 +31,22 @@ Route::middleware('auth')->group(function () {
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}/', [ProductController::class, 'destroy'])->name('products.destroy');    
 Route::get('/pos', function () {
+    $user = auth()->user();
+    $tenant = $user->tenant;
+
+    // For Super Admin, show a placeholder tenant or first tenant
+    if (!$tenant) {
+        $tenant = App\Models\Tenant::first();
+    }
+
     $products = App\Models\Product::where('is_active', true)->get();
-    return view('pos.index', compact('products'));
+
+    return Inertia::render('POS', [
+        'tenant' => $tenant,
+        'products' => $products,
+    ]);
 })->name('pos');
 });
-
 // Root URL - Redirect to login or Dashboard
 Route::get('/', function () {
     return redirect('/pos');
